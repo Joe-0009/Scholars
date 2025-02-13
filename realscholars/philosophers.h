@@ -10,16 +10,17 @@
 # include <limits.h>
 
 
-typedef struct s_philosophers
+typedef struct s_philosopher
 {
-	int id;
-	int times_eaten;
-	int last_meal_time;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
-	struct s_program *program;
-	
-}t_philosophers;
+    int             id;
+    int             times_eaten;
+    long long       last_meal;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
+    pthread_mutex_t *print_mutex;
+    struct s_program *program;
+} t_philosopher;
+
 
 typedef struct s_program
 {
@@ -28,17 +29,21 @@ typedef struct s_program
     int             time_to_eat;
     int             time_to_sleep;
     int             must_eat_count;
-	long long start_time;
-	int				some_one_died;
-	pthread_mutex_t *forks;
-	pthread_t	*threads;
-	t_philosophers *philosophers;
+    long long       start_time;
+    int             someone_died;
+    pthread_mutex_t *forks;
+    pthread_mutex_t print_mutex;
+    pthread_t       *threads;
+    t_philosopher   *philosophers;
 } t_program;
 
-
-
-
-int init_program(t_program *program);
-void clean_program(t_program *program);
+void ft_putstr(char *str);
+int check_args(int ac, char **av);
+int     init_program_args(t_program *program, int ac, char **av);
+int     init_program(t_program *program);
+void    *philosopher_routine(void *arg);
+long long get_current_time(void);
+void    print_status(t_philosopher *philo, char *status);
+void    clean_program(t_program *program);
 
 #endif

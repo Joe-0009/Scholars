@@ -1,0 +1,25 @@
+NAME = philo
+CC = cc 
+CFLAGS = -Wall -Wextra -Werror
+SRCS = main.c \
+       philosophers.c \
+       routine.c \
+       args_check.c
+
+
+OBJS = $(SRCS:.c=.o)
+
+all : $(NAME)
+
+$(NAME) : $(OBJS) philosophers.h
+	$(CC) $(CFLAGS) $(OBJS) -o $@
+	
+clean : 
+	rm -rf $(OBJS)
+
+fclean : clean
+	rm -f $(NAME)
+
+re : fclean all
+
+.SECONDARY : $(OBJS)

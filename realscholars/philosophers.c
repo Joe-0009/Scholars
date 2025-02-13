@@ -8,6 +8,21 @@ long long get_current_time(void)
     return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+static int create_threads(t_program *program)
+{
+    int i;
+
+    program->start_time = get_current_time();
+    i = -1;
+    while (++i < program->number_of_philosophers)
+    {
+        program->philosophers[i].last_meal_time = get_current_time();
+        if (pthread_create(&program->threads[i], NULL, philosophers_routine, &program->philosophers[i]))
+            return (1);
+    }
+    return (0);
+}
+
 int init_program(t_program *program)
 {
     int i;

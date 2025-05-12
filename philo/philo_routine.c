@@ -91,10 +91,16 @@ void	*monitor_routine(void *arg)
 		while (++i < prog->number_of_philosophers)
 		{
 			if (get_time()
-				- get_meal_time(&prog->philosophers[i]) > prog->time_to_die)
+				- get_meal_time(&prog->philosophers[i]) >= prog->time_to_die)
 			{
-				set_death_status(prog->philosophers);
-				print_status(prog->philosophers, "died");
+				// printf("death detected at : ----------------------------------------->
+				// 	%lu\n", get_time()
+				// // - get_meal_time(&prog->philosophers[i]));
+				if (!get_death_status(prog))
+				{
+					set_death_status(prog->philosophers);
+					print_status(prog->philosophers, "died");
+				}
 				return (NULL);
 			}
 		}

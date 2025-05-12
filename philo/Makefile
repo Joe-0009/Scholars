@@ -1,10 +1,17 @@
 NAME = philo
 CC = cc 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread  -g3
 SRCS = main.c \
-       philosophers.c \
-       routine.c \
-       args_check.c
+       args_check.c \
+       init_program.c \
+	   philo_actions.c \
+	   philo_routine.c \
+	   monitor.c \
+	   philo_for_3.c \
+	   init_philos.c \
+	   time.c \
+	   utils.c \
+
 
 
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,6 @@ SRCS = main.c \
        init_program.c \
 	   philo_actions.c \
 	   philo_routine.c \
-	   monitor.c \
 	   philo_for_3.c \
 	   init_philos.c \
 	   time.c \

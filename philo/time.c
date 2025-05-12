@@ -11,9 +11,10 @@ long	get_time(void)
 void	ft_usleep(long time_in_ms)
 {
 	long	start;
+
 	start = get_time();
 	while ((get_time() - start) < time_in_ms)
-		usleep(50);	
+		usleep(50);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

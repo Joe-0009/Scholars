@@ -40,7 +40,7 @@ void	*philosopher_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 		ft_usleep(10);
 	while (!get_death_status(philo->program))
 	{
@@ -75,6 +75,29 @@ void	*philosopher_routine_3(void *arg)
 		}
 		if (sleep_think_actions(philo))
 			break ;
+	}
+	return (NULL);
+}
+
+void	*monitor_routine(void *arg)
+{
+	t_program	*prog;
+	int			i;
+
+	prog = (t_program *)arg;
+	while (!get_death_status(prog))
+	{
+		i = -1;
+		while (++i < prog->number_of_philosophers)
+		{
+			if (get_time()
+				- get_meal_time(&prog->philosophers[i]) > prog->time_to_die)
+			{
+				set_death_status(prog->philosophers);
+				print_status(prog->philosophers, "died");
+				return (NULL);
+			}
+		}
 	}
 	return (NULL);
 }

@@ -44,7 +44,7 @@ static int	release_resources_on_death(t_philosopher *philo)
 
 static void	finish_eating_and_update_turn(t_philosopher *philo)
 {
-	ft_usleep(philo->program->time_to_eat);
+	usleep(philo->program->time_to_eat * 1000);
 	if (philo->left_fork)
 		pthread_mutex_unlock(philo->left_fork);
 	if (philo->right_fork)

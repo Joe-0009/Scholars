@@ -41,17 +41,11 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philosopher *)arg;
 	if (philo->id % 2 == 0)
-		ft_usleep(10);
+		usleep(10 * 1000);
 	while (!get_death_status(philo->program))
 	{
 		if (eat(philo))
 			break ;
-		if (philo->program->must_eat_count != -1
-			&& check_if_all_ate(philo->program))
-		{
-			set_death_status(philo);
-			break ;
-		}
 		if (sleep_think_actions(philo))
 			break ;
 	}
@@ -67,12 +61,6 @@ void	*philosopher_routine_3(void *arg)
 	{
 		if (eat_3(philo))
 			break ;
-		if (philo->program->must_eat_count != -1
-			&& check_if_all_ate(philo->program))
-		{
-			set_death_status(philo);
-			break ;
-		}
 		if (sleep_think_actions(philo))
 			break ;
 	}
@@ -83,27 +71,28 @@ void	*monitor_routine(void *arg)
 {
 	t_program	*prog;
 	int			i;
-
+	long		time_since_meal;
+	
 	prog = (t_program *)arg;
 	while (!get_death_status(prog))
 	{
 		i = -1;
 		while (++i < prog->number_of_philosophers)
 		{
-			if (get_time()
-				- get_meal_time(&prog->philosophers[i]) >= prog->time_to_die)
+			time_since_meal = get_time() - get_meal_time(&prog->philosophers[i]);
+			if (time_since_meal >= prog->time_to_die)
 			{
-				// printf("death detected at : ----------------------------------------->
-				// 	%lu\n", get_time()
-				// // - get_meal_time(&prog->philosophers[i]));
-				if (!get_death_status(prog))
-				{
-					set_death_status(prog->philosophers);
-					print_status(prog->philosophers, "died");
-				}
+				set_death_status(prog->philosophers);
+				print_status(&prog->philosophers[i], "died");
 				return (NULL);
 			}
 		}
+		if (prog->must_eat_count != -1 && check_if_all_ate(prog))
+		{
+			set_death_status(prog->philosophers);
+			return (NULL);
+		}
+		usleep(2 * 1000);
 	}
 	return (NULL);
 }

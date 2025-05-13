@@ -34,8 +34,8 @@ int	eat(t_philosopher *philo)
 		return (1);
 	}
 	print_status(philo, "is eating");
+	usleep(philo->program->time_to_eat * 1000);
 	set_meal_time(philo);
-	ft_usleep(philo->program->time_to_eat);
 	pthread_mutex_unlock(first_fork);
 	pthread_mutex_unlock(second_fork);
 	return (0);
@@ -46,7 +46,7 @@ int	sleep_think_actions(t_philosopher *philo)
 	if (get_death_status(philo->program))
 		return (1);
 	print_status(philo, "is sleeping");
-	ft_usleep(philo->program->time_to_sleep);
+	usleep(philo->program->time_to_sleep * 1000);
 	if (get_death_status(philo->program))
 		return (1);
 	print_status(philo, "is thinking");

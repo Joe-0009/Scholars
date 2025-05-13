@@ -41,7 +41,7 @@ typedef struct s_program
 
 /* time functions */
 long					get_time(void);
-
+void	ft_usleep(long time_in_ms, t_program *prog);
 /* utility functions */
 void					print_status(t_philosopher *philo, char *status);
 int						get_death_status(t_program *prog);

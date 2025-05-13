@@ -11,22 +11,18 @@ long	get_time(void)
 void	ft_usleep(long time_in_ms, t_program *prog)
 {
 	long	start;
+	long	sleep_interval;
 	
 	start = get_time();
-	if (prog->number_of_philosophers > 100 )
-	{
-		while ((get_time() - start) < time_in_ms)
-			usleep(200);
-	}
+	if (prog->number_of_philosophers > 100)
+		sleep_interval = 500;
 	else if (prog->number_of_philosophers > 50)
-	{
-		while ((get_time() - start) < time_in_ms)
-			usleep(100);
-	}
+		sleep_interval = 100;
 	else
+		sleep_interval = 50;
+	while ((get_time() - start) < time_in_ms)
 	{
-		while ((get_time() - start) < time_in_ms)
-			usleep(50);
+		usleep(sleep_interval);
 	}
 }
 

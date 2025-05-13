@@ -40,8 +40,6 @@ void	*philosopher_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	if (philo->id % 2 == 0)
-		ft_usleep(10, philo->program);
 	while (!get_death_status(philo->program))
 	{
 		if (eat(philo))
@@ -71,28 +69,25 @@ void	*monitor_routine(void *arg)
 {
 	t_program	*prog;
 	int			i;
-	long		time_since_meal;
-	
+	int			critical_timing;
+
 	prog = (t_program *)arg;
+	critical_timing = (prog->time_to_die <= prog->time_to_eat
+			+ prog->time_to_sleep);
 	while (!get_death_status(prog))
 	{
 		i = -1;
 		while (++i < prog->number_of_philosophers)
 		{
-			time_since_meal = get_time() - get_meal_time(&prog->philosophers[i]);
-			if (time_since_meal >= prog->time_to_die)
-			{
-				set_death_status(prog->philosophers);
-				print_status(&prog->philosophers[i], "died");
-				return (NULL);
-			}
+			if (get_time()
+				- get_meal_time(&prog->philosophers[i]) >= prog->time_to_die)
+				return (set_death_status(prog->philosophers),
+					print_status(&prog->philosophers[i], "died"), NULL);
 		}
 		if (prog->must_eat_count != -1 && check_if_all_ate(prog))
-		{
-			set_death_status(prog->philosophers);
-			return (NULL);
-		}
-		// ft_usleep(2, prog);
+			return (set_death_status(prog->philosophers), NULL);
+		if (!critical_timing)
+			usleep(100);
 	}
 	return (NULL);
 }

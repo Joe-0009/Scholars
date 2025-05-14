@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 15:37:27 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/05/14 15:37:28 by yrachidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 long	get_time(void)
@@ -12,7 +24,7 @@ void	ft_usleep(long time_in_ms, t_program *prog)
 {
 	long	start;
 	long	sleep_interval;
-	
+
 	start = get_time();
 	if (prog->number_of_philosophers > 100)
 		sleep_interval = 500;
@@ -36,4 +48,15 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (n == i)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	critical_timing(t_program *prog)
+{
+	int	ct;
+
+	if (prog->number_of_philosophers % 2 == 0)
+		ct = (prog->time_to_die <= prog->time_to_eat + prog->time_to_sleep);
+	else
+		ct = (prog->time_to_die / 3 <= prog->time_to_eat + prog->time_to_sleep);
+	return (ct);
 }

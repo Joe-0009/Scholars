@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 15:37:18 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/05/14 15:37:19 by yrachidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
 static int	check_meals_count(t_philosopher *philo)
@@ -69,11 +81,8 @@ void	*monitor_routine(void *arg)
 {
 	t_program	*prog;
 	int			i;
-	int			critical_timing;
 
 	prog = (t_program *)arg;
-	critical_timing = (prog->time_to_die <= prog->time_to_eat
-			+ prog->time_to_sleep);
 	while (!get_death_status(prog))
 	{
 		i = -1;
@@ -86,7 +95,7 @@ void	*monitor_routine(void *arg)
 		}
 		if (prog->must_eat_count != -1 && check_if_all_ate(prog))
 			return (set_death_status(prog->philosophers), NULL);
-		if (!critical_timing)
+		if (!critical_timing(prog))
 			usleep(100);
 	}
 	return (NULL);

@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_for_3.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 15:37:23 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/05/14 15:37:24 by yrachidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-void take_forks_3(t_philosopher *philo)
+void	take_forks_3(t_philosopher *philo)
 {
-    if (philo->left_fork < philo->right_fork)
-    {
-        pthread_mutex_lock(philo->left_fork);
-        print_status(philo, "has taken a fork");
-        pthread_mutex_lock(philo->right_fork);
-        print_status(philo, "has taken a fork");
-    }
-    else
-    {
-        pthread_mutex_lock(philo->right_fork);
-        print_status(philo, "has taken a fork");
-        pthread_mutex_lock(philo->left_fork);
-        print_status(philo, "has taken a fork");
-    }
+	if (philo->left_fork < philo->right_fork)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->right_fork);
+		print_status(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(philo->left_fork);
+		print_status(philo, "has taken a fork");
+	}
 }
 
 static int	wait_for_turn(t_philosopher *philo)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yrachidi <yrachidi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/14 15:37:25 by yrachidi          #+#    #+#             */
+/*   Updated: 2025/05/14 15:37:26 by yrachidi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -42,6 +54,7 @@ typedef struct s_program
 /* time functions */
 long					get_time(void);
 void					ft_usleep(long time_in_ms, t_program *prog);
+int						critical_timing(t_program *prog);
 /* utility functions */
 void					print_status(t_philosopher *philo, char *status);
 int						get_death_status(t_program *prog);
